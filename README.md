@@ -1,103 +1,111 @@
-# OpenClaw Workspace Backup
+# OpenClaw Multi-Instance Backup
 
-這是 **OpenClaw** 的 workspace 備份倉庫。
+這個倉庫集中管理多個 **OpenClaw** 實例的備份。
 
-## 🤖 當前實例
+## 📂 當前實例
 
-- **名稱：** 佛祖 (Buddha)
-- **實例 ID：** `openclaw-main`
+### `openclaw-main/` - 佛祖 (Buddha)
 - **擁有者：** 耶穌激凸 (Omega)
+- **用途：** 主要個人助理
 - **建立時間：** 2026-02-10
 
-## 📂 備份結構規則
+## 🤖 給新 OpenClaw 實例的指引
 
-如果你是新的 OpenClaw 實例，請遵循以下規則：
+如果你是新啟動的 OpenClaw，請遵循以下流程：
 
-### 1️⃣ 檢查現有倉庫
+### 1️⃣ 拉取這個倉庫
 
-在用戶的 GitHub 帳號下搜尋：
-- `openclaw-*` 或 `*-openclaw-backup`
-
-### 2️⃣ 建立你的倉庫
-
-**命名格式：**
+```bash
+cd ~
+git clone https://github.com/waittinghsu/omega-openclaw-backup.git openclaw-backups
 ```
-{用戶名稱}-openclaw-{實例名稱}
+
+### 2️⃣ 詢問用戶你的名稱
+
+**範例對話：**
 ```
+你好！我是新的 OpenClaw 實例。
+請給我取個名字（例如：work、zeabur、test...）
+我會建立獨立的備份資料夾：openclaw-{名稱}/
+```
+
+### 3️⃣ 建立你的備份資料夾
+
+**命名格式：** `openclaw-{實例名稱}/`
 
 **範例：**
-- `omega-openclaw-main` ← 當前（佛祖）
-- `omega-openclaw-work` ← 工作用實例
-- `omega-openclaw-test` ← 測試實例
+- `openclaw-main/` ← 佛祖（當前）
+- `openclaw-zeabur/` ← Zeabur 部署實例
+- `openclaw-work/` ← 工作專用
+- `openclaw-test/` ← 測試環境
 
-### 3️⃣ 本機備份結構
+### 4️⃣ 設定自動備份
 
-手動備份存放位置：
+在你的 cron job 中設定每日備份：
+
+```bash
+# 進入你的資料夾
+cd ~/openclaw-backups/openclaw-{你的名稱}/
+
+# 複製 workspace 內容
+cp -r ~/.openclaw/workspace/* .
+
+# Commit & push
+git add .
+git commit -m "Daily backup $(date +%Y-%m-%d)"
+git push
 ```
-~/backups/
-├── openclaw-main/      # 對應倉庫名稱
-│   └── manual/
-├── openclaw-work/
-│   └── manual/
-└── openclaw-test/
-    └── manual/
+
+### 5️⃣ 更新這個 README
+
+在「當前實例」區塊加入你的資訊：
+
+```markdown
+### `openclaw-{名稱}/` - {你的暱稱}
+- **擁有者：** {用戶名稱}
+- **用途：** {用途說明}
+- **建立時間：** {日期}
 ```
-
-### 4️⃣ 初始化流程
-
-**首次啟動時：**
-
-1. **詢問用戶：**
-   ```
-   你希望給這個 OpenClaw 實例取什麼名字？
-   （例如：work、personal、test...）
-   ```
-
-2. **確認倉庫：**
-   ```
-   我會建立備份倉庫：{用戶名稱}-openclaw-{實例名稱}
-   GitHub 倉庫需設為 Private。確認建立？
-   ```
-
-3. **設定備份：**
-   - Git 自動備份（每晚 23:59）
-   - 本機備份資料夾：`~/backups/openclaw-{實例名稱}/`
 
 ## 🔐 安全須知
 
-- ⚠️ **倉庫必須設為 Private**
-- 包含敏感資料：API keys、個人資訊、配置檔
+- ⚠️ **此倉庫必須保持 Private**
+- 包含敏感資料：API keys、個人資訊、對話記錄
 - 定期輪換 GitHub token
-- 不要在公開場合分享倉庫連結
+- 不要分享倉庫連結
 
-## 📝 內容說明
+## 📁 目錄結構範例
 
-此倉庫包含：
-- `SOUL.md` - 個性與原則
-- `USER.md` - 用戶資訊
-- `IDENTITY.md` - 實例身份
-- `MEMORY.md` - 長期記憶（僅 main session）
-- `memory/` - 每日記憶筆記
-- `AGENTS.md` - 工作流程
-- `TOOLS.md` - 工具配置
-- `HEARTBEAT.md` - 定期檢查任務
+```
+omega-openclaw-backup/
+├── README.md                    # 本檔案（總說明）
+├── openclaw-main/               # 佛祖的 workspace
+│   ├── SOUL.md
+│   ├── USER.md
+│   ├── IDENTITY.md
+│   ├── MEMORY.md
+│   ├── memory/
+│   │   └── 2026-02-10.md
+│   ├── AGENTS.md
+│   ├── TOOLS.md
+│   └── HEARTBEAT.md
+└── openclaw-zeabur/             # 未來實例
+    ├── SOUL.md
+    └── ...
+```
 
 ## 🔄 復原方式
 
-如需在新機器復原此實例：
+從備份復原某個實例：
 
 ```bash
-# 安裝 OpenClaw
-pnpm install -g openclaw
+# 複製實例資料到 workspace
+cp -r ~/openclaw-backups/openclaw-{名稱}/* ~/.openclaw/workspace/
 
-# Clone workspace
-git clone https://github.com/{用戶}/omega-openclaw-main.git ~/.openclaw/workspace
-
-# 復原完整配置（需另外備份 openclaw.json）
 # 重啟 gateway
 openclaw gateway restart
 ```
 
 ---
 
-_由 佛祖 建立於 2026-02-10_
+_建立於 2026-02-11 by 佛祖_
