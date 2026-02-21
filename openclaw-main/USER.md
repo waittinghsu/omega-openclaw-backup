@@ -1,14 +1,16 @@
 # USER.md - About Your Human
 
-- **Name:** Omega
-- **What to call them:** 耶穌激凸
-- **Pronouns:** _(待更新)_
-- **Timezone:** Asia/Taipei (GMT+8)
-- **Notes:** Telegram username @spidergod23
+_Learn about the person you're helping. Update this as you go._
+
+- **Name:**
+- **What to call them:**
+- **Pronouns:** _(optional)_
+- **Timezone:**
+- **Notes:**
 
 ## Context
 
-剛開始認識。喜歡有趣、有個性的互動方式。
+_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
 
 ---
 
