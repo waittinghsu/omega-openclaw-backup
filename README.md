@@ -74,7 +74,12 @@ git push
 - 定期輪換 GitHub token
 - 不要分享倉庫連結
 
-## 📁 目錄結構範例
+## 📁 目錄結構範例（根目錄規則）
+
+> **根目錄只能包含：**
+> 1. `README.md`
+> 2. `openclaw-{實例名稱}/` 資料夾（每個實例一個）
+> 其他任何個別檔案（例如 AGENTS.md、USER.md、skills/...）都必須放在對應的 `openclaw-{名稱}/` 內，避免污染主目錄並確保備份乾淨。
 
 ```
 omega-openclaw-backup/
